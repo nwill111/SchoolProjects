@@ -1,4 +1,3 @@
-# Nathan Williams ITCS 3153-051
 
 # Imports
 import numpy as np
