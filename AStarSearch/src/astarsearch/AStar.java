@@ -140,7 +140,7 @@ public class AStar {
         }
 
         // Top Right
-        if (col < 14 && row < 0) {
+        if (col < 14 && row > 0) {
 
             if (nodes[row - 1][col + 1].getType() == 0) {
                 surroundingNodes.add(nodes[row - 1][col + 1]);
@@ -170,10 +170,9 @@ public class AStar {
 
         for (Node n : surroundingNodes) {
             if (n.getType() == 0 && !(closedList.containsKey(n.getId()))) {
-                calcHeuristic(n);
-                calcGCost(n);
-                n.setF();
-                n.setParent(node);
+                
+                
+                calcCost(n, node);
 
                 //Adds the node to the open list if not already contained
                 if (!openList.contains(n)) {
@@ -189,7 +188,7 @@ public class AStar {
      * Calculates the heuristic value of the node using the manhattan method
      * @param node Node to calculate heuristic value for
      */
-    public void calcHeuristic(Node node) {
+    public void setHCost(Node node) {
         int currentX = node.getRow();
         int currentY = node.getCol();
         int endX = endNode.getRow();
@@ -201,30 +200,32 @@ public class AStar {
     }
 
     /**
-     * Calculates the G value of the node by calculating distance from the start
-     * @param node Node to calculate g value for
+     * Calculates the costs and sets them for neighboring nodes
+     * @param neighbor Node to calculate values for
+     * @param currNode Node currently being searched
      */
-    public void calcGCost(Node node) {
-        int row = node.getRow();
-        int col = node.getCol();
-        Node parent = node.getParent();
+    public void calcCost(Node neighbor, Node currNode) {
+        int row = neighbor.getRow();
+        int col = neighbor.getCol();
 
-        if (parent != null) {
+            int moveCost = currNode.getG();
 
-            int moveCost = parent.getG();
-
-            if (parent.getRow() == row || parent.getCol() == col) {
+            if (currNode.getRow() == row || currNode.getCol() == col) {
                 moveCost += 10;
             } else {
                 moveCost += 14;
             }
 
-            if (node.getG() > moveCost && node.getG() > 0) {
-                node.setG(moveCost);
-            }
-
-        }
-
+           // If current G cost is higher or there is no current G cost
+         if (neighbor.getG() == 0 || moveCost < neighbor.getG()) {
+                
+                neighbor.setG(moveCost);
+                setHCost(neighbor);
+                neighbor.setF();
+                neighbor.setParent(currNode);      
+                
+            } 
+     
     }
 
     /**
@@ -317,6 +318,10 @@ public class AStar {
         ArrayList<Node> printedPath = path;
         Collections.reverse(printedPath);
         System.out.println("Path taken: " + printedPath);
+        
+        for (Node n : printedPath) {
+            System.out.println(n.getParent());
+        }
     }
 
     /**

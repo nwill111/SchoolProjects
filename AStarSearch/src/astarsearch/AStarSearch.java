@@ -29,7 +29,7 @@ public class AStarSearch {
 
         // Loops until a valid input is entered
         while (!validInput) {
-            try {
+       //     try {
                 System.out.println("Enter the X cord of the starting area (0-14)");
                 startX = Integer.parseInt(sc.nextLine());
 
@@ -66,9 +66,9 @@ public class AStarSearch {
                     System.out.println("Invalid input! Make sure the selected nodes are both in bounds and on traversable nodes. Try again!");
                 }
 
-            } catch (Exception e) {
-                System.out.println("Inputted value must be a valid integer. Try again!");
-            }
+         //   } catch (Exception e) {
+          //      System.out.println("Inputted value must be a valid integer. Try again! " + e.getMessage());
+         //   }
         }
 
     }
@@ -114,7 +114,6 @@ public class AStarSearch {
 
     /**
      * Checks to make sure that the selected coordinate is traversable
-     *
      * @param b The current board as an AStar Object
      * @param x The selected X coordinate as an int
      * @param y The selected Y coordinate as an int
@@ -122,11 +121,7 @@ public class AStarSearch {
      */
     public static boolean isLegal(AStar b, int x, int y) {
         Node node = b.getNode(x, y);
-        if (node.getType() == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return node.getType() == 0;
     }
 
 }
