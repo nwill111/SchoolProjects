@@ -29,7 +29,7 @@ public class AStarSearch {
 
         // Loops until a valid input is entered
         while (!validInput) {
-       //     try {
+            try {
                 System.out.println("Enter the X cord of the starting area (0-14)");
                 startX = Integer.parseInt(sc.nextLine());
 
@@ -66,9 +66,9 @@ public class AStarSearch {
                     System.out.println("Invalid input! Make sure the selected nodes are both in bounds and on traversable nodes. Try again!");
                 }
 
-         //   } catch (Exception e) {
-          //      System.out.println("Inputted value must be a valid integer. Try again! " + e.getMessage());
-         //   }
+            } catch (Exception e) {
+                System.out.println("Inputted value must be a valid integer. Try again! " + e.getMessage());
+            }
         }
 
     }
